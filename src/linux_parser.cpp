@@ -63,7 +63,7 @@ vector<int> LinuxParser::Pids() {
 }
 
 float LinuxParser::MemoryUtilization() {
-  float memTotal = 0.0;
+  float memoryTotal = 0.0;
   float memFree = 0.0;
   string linha;
   string chave;
@@ -78,7 +78,7 @@ float LinuxParser::MemoryUtilization() {
       std::istringstream linestream(linha);
       while (linestream >> chave >> valor) {
         if (chave == "MemTotal") {
-          memTotal = std::stof(valor);
+          memoryTotal = std::stof(valor);
         }
         else if (chave == "MemFree") {
           memFree = std::stof(valor);
@@ -88,7 +88,7 @@ float LinuxParser::MemoryUtilization() {
     }
   }
 
-  return ((memTotal - memFree) / memTotal);
+  return ((memoryTotal - memFree) / memoryTotal);
 }
 
 long LinuxParser::UpTime() {
@@ -123,25 +123,25 @@ vector<string> LinuxParser::CpuUtilization() {
   vector<string> cpuvalors{};
   string linha;
   string chave;
-  string vuser, vnice, vsystem, vidle, viowait, virq, vsoftirq, vsteal, vguest,
-      vguest_nice;
+  string ruser, rnice, rsystem, ridle, riowait, rirq, rsoftirq, rsteal, rguest,
+      rguest_nice;
   std::ifstream filestream(kProcDirectory + kStatFilename);
   if (filestream.is_open()) {
     while (std::getline(filestream, linha)) {
       std::istringstream linestream(linha);
-      while (linestream >> chave >> vuser >> vnice >> vsystem >> vidle >>
-             viowait >> virq >> vsoftirq >> vsteal >> vguest >> vguest_nice) {
+      while (linestream >> chave >> ruser >> rnice >> rsystem >> ridle >>
+             riowait >> rirq >> rsoftirq >> rsteal >> rguest >> rguest_nice) {
         if (chave == "cpu") {
-          cpuvalors.push_back(vuser);
-          cpuvalors.push_back(vnice);
-          cpuvalors.push_back(vsystem);
-          cpuvalors.push_back(vidle);
-          cpuvalors.push_back(viowait);
-          cpuvalors.push_back(virq);
-          cpuvalors.push_back(vsoftirq);
-          cpuvalors.push_back(vsteal);
-          cpuvalors.push_back(vguest);
-          cpuvalors.push_back(vguest_nice);
+          cpuvalors.push_back(ruser);
+          cpuvalors.push_back(rnice);
+          cpuvalors.push_back(rsystem);
+          cpuvalors.push_back(ridle);
+          cpuvalors.push_back(riowait);
+          cpuvalors.push_back(rirq);
+          cpuvalors.push_back(rsoftirq);
+          cpuvalors.push_back(rsteal);
+          cpuvalors.push_back(rguest);
+          cpuvalors.push_back(rguest_nice);
           return cpuvalors;
         }
       }
